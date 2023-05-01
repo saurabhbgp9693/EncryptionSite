@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: auto;
+        padding: auto;
+        background-image: url("enc.png");
+
+    }
+    #genreateKey{
+        width: 200px;
+        height: 300px;
+        background-image: linear-gradient(to right top, deeppink,blue);
+    }
+    .formbox{
+        width: 100%;
+        height: 90vh;
+    }
+    h1{
+        color: black yellow;
+    }
+</style>
+<body>
+    <div class="encryptionHeader">
+        <h1>Encryption World</h1>
+    </div>
+    <div class="formbox">
+        <h1>Generate Key</h1>
+        <form id="generatekey" action="/genKey">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="abc@xyz.com">
+            <br>
+            <button type="submit" style="background-color: blue; color: white; padding: 10px;">Send</button>
+          </form>
+          
+    </div>
+</body>
+</html>

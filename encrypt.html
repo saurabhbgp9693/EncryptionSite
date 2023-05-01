@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: auto;
+        padding: auto;
+    }
+    .container{
+        background-color: aqua;
+        height: 90hv;
+        width: 100%;
+
+    }
+    .encryptionHeader{
+        background-image: linear-gradient(to right bottom,blue,black);
+    }
+    .formbox{
+        width: 300px;
+        height: 5in;
+        background-image: linear-gradient(to left top, deeppink,blue);
+    }
+
+</style>
+<body>
+    <div class="container">
+        <div class="encryptionHeader">
+            <h1>Encryption World</h1>
+        </div>
+        <div class="formbox">
+            <h1>Encrypt Message</h1>
+        
+            <form id="enc-form" action="/enc-message">
+                <label for="message">Message :</label>
+                <br>
+                <input type="text" name="message" id="message" required>
+                <br>
+                <input type="text" name="key" id="key">
+                <br>
+                <input type="submit" name="submit" id="submit" value="Encrypt">
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
