@@ -5,7 +5,7 @@
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-			background-image: url("enc.png");
+			background-image: url("../enc.png");
             /* background-image: linear-gradient(to left bottom,rgb(255, 0, 140),blue ); */
             background-repeat: no-repeat;
 			background-size: cover;
@@ -79,17 +79,17 @@
 
         <div class="form-container">
             <h2>Generate Key</h2>
-            <form id="generate-key-form" action="/generate-key">
+            <form id="generate-key-form" action="/generate-key" method="POST">
                 <button type="submit">Generate Key</button>
             </form>
 
             <h2>Encrypt Message</h2>
-            <form id="encrypt-form" action="/encrypt">
+            <form id="encrypt-form" action="/encrypt" method="POST">
                 <button type="submit">Encrypt Message</button>
             </form>
 
             <h2>Decrypt Message</h2>
-            <form id="decrypt-form" action="/decrypt">
+            <form id="decrypt-form" action="/decrypt" method="POST">
                 <button type="submit">Decrypt Message</button>
             </form>
         </div>

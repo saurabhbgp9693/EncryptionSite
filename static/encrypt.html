@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: auto;
+        padding: 0;
+        background-color: cyan;
+    }
+    .container{
+        background-color: aqua;
+        height: 100vh;
+        width: 100%;
+
+    }
+    .encryptionHeader{
+        text-align: center;
+        background-image: linear-gradient(to right bottom,blue,black);
+        color: deeppink;
+    }
+    .formbox{
+        justify-content: right;
+        margin:100px auto;
+        width: 5in;
+        height: 5in;
+
+        border-radius: 10px 2px;
+        background-image: linear-gradient(to left top, deeppink,blue);
+    }
+
+    form input[type="submit"]{
+        float: right;
+        margin:15px;
+        margin-right: 35px;
+
+        background-color: yellow;
+        width: 2.2in;
+        padding: 10px;
+        box-shadow: #2d2d2d 4px 4px;
+        border-radius: 4px;
+    }
+
+    input, textarea{
+        margin: 5px;
+        margin-left: 40px;
+        width: 4in;
+        padding: 10px;
+        resize: none;
+        box-shadow: #2d2d2d 4px 4px;
+        border-radius: 4px 10px;
+    }
+    label{
+        width: 2in;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: darksalmon;
+        margin:10px;
+        text-shadow: #2d2d2d 1px 2px;
+        border-radius: 3px;
+
+    }
+
+
+
+</style>
+<body>
+<div class="container">
+    <div class="encryptionHeader">
+        <h1>Encryption World</h1>
+    </div>
+    <div class="formbox">
+        <h1 style="text-align: center">Encrypt Message</h1>
+        <hr style="color: black; width: 4in">
+        <form id="enc-form" action="/enc-message" method="POST">
+            <label for="message">Message :</label><br>
+            <input style="height: 0.7in; " name="message" id="message" required>
+            <br>
+            <label for="key">Key :</label>
+            <br>
+            <input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+            <br>
+            <input type="submit" name="submit" id="submit" value="Encrypt">
+            <br>
+            <br>
+            <br>
+            <label for="ciphertext">Encrypted Message :</label>
+            <textarea name="ciphertext" id="ciphertext" cols="30" rows="7"></textarea>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+

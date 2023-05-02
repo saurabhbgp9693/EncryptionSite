@@ -9,12 +9,15 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-
+	"net/smtp"
 )
+
+var path = "static/"
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
 	filename := "home.html"
-	t, err := template.ParseFiles(filename)
+
+	t, err := template.ParseFiles(path + filename)
 	if err != nil {
 		fmt.Println("Error when parsing file", err)
 		return
@@ -24,11 +27,12 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error when executing template", err)
 		return
 	}
-	
+
 }
-func DecryptPage(w http.ResponseWriter,r *http.Request){
+
+func DecryptPage(w http.ResponseWriter, r *http.Request) {
 	filename := "decrypt.html"
-	t, err := template.ParseFiles(filename)
+	t, err := template.ParseFiles(path + filename)
 	if err != nil {
 		fmt.Println("Error when parsing file", err)
 		return
@@ -40,44 +44,19 @@ func DecryptPage(w http.ResponseWriter,r *http.Request){
 	}
 }
 
-func DecryptMessage(w http.ResponseWriter, r *http.Request){
-	cipher:=r.FormValue("cipher")
-	key:=r.FormValue("key")
-	plaintext,err:=Decrypt([]byte(key),cipher)
-	if err!=nil{
-		fmt.Println("failed to decrypt the message",err)
+func DecryptMessage(w http.ResponseWriter, r *http.Request) {
+	cipher := r.FormValue("cipher")
+	key := r.FormValue("key")
+	plaintext, err := Decrypt([]byte(key), cipher)
+	if err != nil {
+		fmt.Println("failed to decrypt the message", err)
 	}
 	fmt.Fprintln(w, plaintext)
 }
 
-func KeyGen(w http.ResponseWriter, r *http.Request){
-	filename:="keygen.html"
-	t, err := template.ParseFiles(filename)
-	if err != nil {
-		fmt.Println("Error when parsing file", err)
-		return
-	}
-	err = t.ExecuteTemplate(w, filename, nil)
-	if err != nil {
-		fmt.Println("Error when executing template", err)
-		return
-	}
-
-}
-func GenKeyHandler(w http.ResponseWriter, r *http.Request){
-	key,err:=GenerateAESKey(128)
-	if err!=nil{
-		fmt.Println("failed to generate key",err)
-	}
-	email:=r.FormValue("email")
-
-	fmt.Fprintln(w,fmt.Sprintf("%x",key))
-	fmt.Fprintln(w,email)
-}
-
-func EncryptHandler(w http.ResponseWriter , r *http.Request){
-	filename:="encrypt.html"
-	t, err := template.ParseFiles(filename)
+func KeyGen(w http.ResponseWriter, r *http.Request) {
+	filename := "keygen.html"
+	t, err := template.ParseFiles(path + filename)
 	if err != nil {
 		fmt.Println("Error when parsing file", err)
 		return
@@ -90,18 +69,47 @@ func EncryptHandler(w http.ResponseWriter , r *http.Request){
 
 }
 
-func EncryptMessage(w http.ResponseWriter, r *http.Request){
-	message:=r.FormValue("message")
-	key:=r.FormValue("key")
-	encryptedMessage,err:=Encrypt([]byte(key),message)
-	if err!=nil{
-		fmt.Println("failed to encrypt the message",err)
+func GenKeyHandler(w http.ResponseWriter, r *http.Request) {
+	key, err := GenerateAESKey(128)
+	if err != nil {
+		fmt.Println("failed to generate key", err)
 	}
-	fmt.Fprintln(w,encryptedMessage)
+	email := r.FormValue("email")
+	var mail []string
+	mail = append(mail, email)
+
+	data := fmt.Sprintf("%x", key)
+	SendKey(mail, data)
 }
+
+func EncryptHandler(w http.ResponseWriter, r *http.Request) {
+	filename := "encrypt.html"
+	t, err := template.ParseFiles(path + filename)
+	if err != nil {
+		fmt.Println("Error when parsing file", err)
+		return
+	}
+	err = t.ExecuteTemplate(w, filename, nil)
+	if err != nil {
+		fmt.Println("Error when executing template", err)
+		return
+	}
+
+}
+
+func EncryptMessage(w http.ResponseWriter, r *http.Request) {
+	message := r.FormValue("message")
+	key := r.FormValue("key")
+	encryptedMessage, err := Encrypt([]byte(key), message)
+	if err != nil {
+		fmt.Println("failed to encrypt the message", err)
+	}
+	fmt.Fprintln(w, encryptedMessage)
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	filename := "index.html"
-	t, err := template.ParseFiles(filename)
+	t, err := template.ParseFiles(path + filename)
 	if err != nil {
 		fmt.Println("Error when parsing file", err)
 		return
@@ -118,13 +126,7 @@ func OnClick(w http.ResponseWriter, r *http.Request) {
 	key := r.FormValue("key")
 	fmt.Fprintln(w, message)
 	fmt.Fprintln(w, key)
-	fmt.Println(message)
-	fmt.Println(key)
 
-}
-
-func Hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "hello Sam!!!")
 }
 
 func Encrypt(key []byte, message string) (string, error) {
@@ -178,17 +180,33 @@ func Decrypt(key []byte, message string) (string, error) {
 }
 
 func GenerateAESKey(keySize int) ([]byte, error) {
-    // Check if the key size is valid
-    if keySize != 128 && keySize != 192 && keySize != 256 {
-        return nil, fmt.Errorf("invalid key size. Key size must be 128, 192, or 256 bits")
-    }
+	// Check if the key size is valid
+	if keySize != 128 && keySize != 192 && keySize != 256 {
+		return nil, fmt.Errorf("invalid key size. Key size must be 128, 192, or 256 bits")
+	}
 
-    // Generate a random key of the specified size
-    key := make([]byte, keySize/8)
-    _, err := rand.Read(key)
-    if err != nil {
-        return nil, err
-    }
+	// Generate a random key of the specified size
+	key := make([]byte, keySize/8)
+	_, err := rand.Read(key)
+	if err != nil {
+		return nil, err
+	}
 
-    return key, nil
+	return key, nil
+}
+
+func SendKey(receiverEmail []string, key string) {
+	var to = receiverEmail
+	from := "saurabhbgp9693@gmail.com"
+	password := "ycdwztmuofrelctr"
+	msg := "Subject: Hello!\n\nYour AES Key is:\n\n"
+
+	msg = msg + key
+	err := smtp.SendMail("smtp.gmail.com:587",
+		smtp.PlainAuth("", from, password, "smtp.gmail.com"),
+		from, []string{to[0]}, []byte(msg))
+
+	if err != nil {
+		panic(err)
+	}
 }
