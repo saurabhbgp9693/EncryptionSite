@@ -1,11 +1,9 @@
 package controller
 
-
 import (
-	"encryptedWorld/services"
+	"github.com/saurabhbgp9693/EncryptionSite/services"
 	"net/http"
 )
-
 
 func Handlers(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
@@ -14,18 +12,18 @@ func Handlers(w http.ResponseWriter, r *http.Request) {
 	case "/login-submit":
 		services.OnClick(w, r)
 	case "/generate-key":
-		services.KeyGen(w,r)
+		services.KeyGen(w, r)
 	case "/genKey":
-		services.GenKeyHandler(w,r)
+		services.GenKeyHandler(w, r)
 	case "/encrypt":
-		services.EncryptHandler(w,r)
+		services.EncryptHandler(w, r)
 	case "/enc-message":
-		services.EncryptMessage(w,r)
+		services.EncryptMessage(w, r)
 	case "/decrypt":
 		services.DecryptPage(w, r)
 	case "/dec-message":
-		services.DecryptMessage(w,r)
+		services.DecryptMessage(w, r)
 	default:
-		services.HomePage(w,r)
+		services.HomePage(w, r)
 	}
 }

@@ -1,13 +1,11 @@
 package router
 
 import (
-	"encryptedWorld/controller"
+	"github.com/saurabhbgp9693/EncryptionSite/controller"
 	"net/http"
 )
 
-
-
-func RouterHandler(){
+func RouterHandler() {
 	// Register the route handlers
 	http.HandleFunc("/", controller.Handlers)
 }
