@@ -27,22 +27,8 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error when executing template", err)
 		return
 	}
-
 }
 
-//func DecryptPage(w http.ResponseWriter, r *http.Request) {
-//	filename := "decrypt.html"
-//	t, err := template.ParseFiles(path + filename)
-//	if err != nil {
-//		fmt.Println("Error when parsing file", err)
-//		return
-//	}
-//	err = t.ExecuteTemplate(w, filename, nil)
-//	if err != nil {
-//		fmt.Println("Error when executing template", err)
-//		return
-//	}
-//}
 func DecryptPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		cipher := r.FormValue("cipher")
@@ -261,16 +247,147 @@ func DecryptMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func KeyGen(w http.ResponseWriter, r *http.Request) {
-	filename := "keygen.html"
-	t, err := template.ParseFiles(path + filename)
-	if err != nil {
-		fmt.Println("Error when parsing file", err)
-		return
-	}
-	err = t.ExecuteTemplate(w, filename, nil)
-	if err != nil {
-		fmt.Println("Error when executing template", err)
-		return
+
+	if r.Method == "POST" {
+		key, err := GenerateAESKey(128)
+		if err != nil {
+			fmt.Println("failed to generate key", err)
+		}
+		email := r.FormValue("email")
+		var mail []string
+		mail = append(mail, email)
+
+		data := fmt.Sprintf("%x", key)
+		SendKey(mail, data)
+		//filename := "keygen.html"
+		str := "key successfully generated and sent"
+		//t, err := template.ParseFiles(path + filename)
+		//if err != nil {
+		//	fmt.Println("Error when parsing file", err)
+		//	return
+		//}
+		//err = t.ExecuteTemplate(w, filename, str)
+		//if err != nil {
+		//	fmt.Println("Error when executing template", err)
+		//	return
+		//}
+
+		fmt.Fprintf(w, `<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		   <meta charset="UTF-8">
+		   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		   <title>Document</title>
+		</head>
+		<style>
+		   body{
+		       margin: auto;
+		       padding: 0;
+		       //background-color: cyan;
+		   }
+		   .container{
+		       background-color: aqua;
+		       height: 100vh;
+		       width: 15in;
+		
+		   }
+		   .encryptionHeader{
+		       text-align: center;
+		       background-image: linear-gradient(to right bottom,blue,black);
+		       color: deeppink;
+		   }
+		   .formbox{
+		       justify-content: right;
+		       margin:100px auto;
+		       width: 5in;
+		       height: 5in;
+		
+		       border-radius: 10px 2px;
+		       background-image: linear-gradient(to left top, deeppink,blue);
+		   }
+		
+		   form input[type="submit"]{
+		       float: right;
+		       margin:15px;
+		       margin-right: 35px;
+		
+		       background-color: yellow;
+		       width: 2.2in;
+		       padding: 10px;
+		       box-shadow: #2d2d2d 4px 4px;
+		       border-radius: 4px;
+		   }
+		
+		   input, textarea{
+		       margin: 5px;
+		       margin-left: 40px;
+		       width: 4in;
+		       padding: 10px;
+		       resize: none;
+		       box-shadow: #2d2d2d 4px 4px;
+		       border-radius: 4px 10px;
+		   }
+		   label{
+		       width: 2in;
+		       font-family: Arial, sans-serif;
+		       font-weight: bold;
+		       color: darksalmon;
+		       margin:10px;
+		       text-shadow: #2d2d2d 1px 2px;
+		       border-radius: 3px;
+		
+		   }
+		   h1{
+		       text-align: center;
+		   }
+		
+		
+		
+		</style>
+		<body>
+		<div class="container" style="background-image: url('enc.jpg');">
+		   <div class="encryptionHeader">
+		       <h1>Encryption World</h1>
+		   </div>
+		   <div class="formbox">
+		
+		       <h1>Generate Key</h1>
+		       <hr style="color: black; width: 4in">
+		
+		
+		       <form id="enc-form" method="POST">
+		           <br>
+		           <br>
+		           <label for="email">Email:</label>
+		           <br>
+		           <input type="email" id="email" name="email" required placeholder="abc@xyz.com">
+		           <br>
+		           <br>
+                   <h3 style="color: white; text-align:right ; margin-right:35px">%s<h3>
+		           <br>
+		           <input type="submit" name="submit" id="submit" value="Send">
+		           <br>
+					
+		
+		       </form>
+		   </div>
+		</div>
+		</body>
+		</html>`, str)
+	} else {
+		filename := "keygen.html"
+		t, err := template.ParseFiles(path + filename)
+		if err != nil {
+			fmt.Println("Error when parsing file", err)
+			return
+		}
+
+		err = t.ExecuteTemplate(w, filename, nil)
+		if err != nil {
+			fmt.Println("Error when executing template", err)
+			return
+		}
 	}
 
 }
@@ -513,28 +630,6 @@ func EncryptMessage(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("failed to encrypt the message", err)
 	}
 	fmt.Fprintln(w, encryptedMessage)
-}
-
-func Index(w http.ResponseWriter, r *http.Request) {
-	filename := "index.html"
-	t, err := template.ParseFiles(path + filename)
-	if err != nil {
-		fmt.Println("Error when parsing file", err)
-		return
-	}
-	err = t.ExecuteTemplate(w, "index.html", nil)
-	if err != nil {
-		fmt.Println("Error when executing template", err)
-		return
-	}
-}
-
-func OnClick(w http.ResponseWriter, r *http.Request) {
-	message := r.FormValue("message")
-	key := r.FormValue("key")
-	fmt.Fprintln(w, message)
-	fmt.Fprintln(w, key)
-
 }
 
 func Encrypt(key []byte, message string) (string, error) {
