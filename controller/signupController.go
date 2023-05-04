@@ -7,8 +7,6 @@ import (
 
 func Handlers(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/login":
-		services.Index(w, r)
 	case "/login-submit":
 		services.OnClick(w, r)
 	case "/generate-key":

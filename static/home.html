@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
-	<title>Encryption & Decryption Home</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-image: url("../enc.png");
+    <title>Encryption & Decryption Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("enc.jpg");
             /* background-image: linear-gradient(to left bottom,rgb(255, 0, 140),blue ); */
             background-repeat: no-repeat;
-			background-size: cover;
-			margin: 0;
-			padding: 0;
-			height: 700px;
-			color: #fff;
-		}
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 700px;
+            color: #fff;
+        }
 
-		h1 {
-			text-align: center;
-			margin-top: 50px;
-			font-size: 3em;
-			text-shadow: 2px 2px #000;
-		}
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3em;
+            text-shadow: 2px 2px #000;
+        }
 
-		.form-container {
-			/* background-color: rgba(255, 255, 255, 0.8); */
-			border-radius: 5px;
-			margin: 50px auto;
-			padding: 20px;
-			width: 20%;
-			max-width: 800px;
+        .form-container {
+            /* background-color: rgba(255, 255, 255, 0.8); */
+            border-radius: 5px;
+            margin: 50px auto;
+            padding: 20px;
+            width: 20%;
+            max-width: 800px;
             background-image: linear-gradient(to top left,rgb(255, 0, 140),blue);
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-		}
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
 
-		h2 {
-			margin-top: 20px;
-			font-size: 1.5em;
-			text-shadow: 1px 1px #000;
-		}
+        h2 {
+            margin-top: 20px;
+            font-size: 1.5em;
+            text-shadow: 1px 1px #000;
+        }
 
-		form {
-			display: flex;
-			flex-direction: column;
-			margin-bottom: 20px;
-		}
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
         .encryptionHeader{
             background-image: linear-gradient(to top left,rgb(107, 107, 223),rgba(108, 103, 103, 0.749));
         }
@@ -51,51 +51,51 @@
             width: 70%;
         }
 
-		button {
-			background-color: #4CAF50;
-			color: #fff;
-			border: none;
-			padding: 10px 20px;
-			border-radius: 3px;
-			cursor: pointer;
-			margin-top: 10px;
-			font-size: 1.2em;
-			text-shadow: 1px 1px #000;
-		}
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1.2em;
+            text-shadow: 1px 1px #000;
+        }
 
-		button:hover {
-			background-color: #3e8e41;
-		}
+        button:hover {
+            background-color: #3e8e41;
+        }
         .bodyBox{
             display: flex;
         }
-	</style>
+    </style>
 </head>
-<body>
-    <div class="encryptionHeader">
-        <h1>Encryption World</h1>
+<body >
+<div class="encryptionHeader">
+    <h1>Encryption World</h1>
+</div>
+<div class="bodyBox">
+
+    <div class="form-container">
+        <h2>Generate Key</h2>
+        <form id="generate-key-form" action="/generate-key" method="GET">
+            <button type="submit">Generate Key</button>
+        </form>
+
+        <h2>Encrypt Message</h2>
+        <form id="encrypt-form" action="/encrypt" method="GET">
+            <button type="submit">Encrypt Message</button>
+        </form>
+
+        <h2>Decrypt Message</h2>
+        <form id="decrypt-form" action="/decrypt" method="GET">
+            <button type="submit">Decrypt Message</button>
+        </form>
     </div>
-    <div class="bodyBox">
+    <div class="empty">
 
-        <div class="form-container">
-            <h2>Generate Key</h2>
-            <form id="generate-key-form" action="/generate-key" method="POST">
-                <button type="submit">Generate Key</button>
-            </form>
-
-            <h2>Encrypt Message</h2>
-            <form id="encrypt-form" action="/encrypt" method="POST">
-                <button type="submit">Encrypt Message</button>
-            </form>
-
-            <h2>Decrypt Message</h2>
-            <form id="decrypt-form" action="/decrypt" method="POST">
-                <button type="submit">Decrypt Message</button>
-            </form>
-        </div>
-        <div class="empty">
-
-        </div>
     </div>
+</div>
 </body>
 </html>

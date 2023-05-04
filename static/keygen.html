@@ -9,30 +9,30 @@
 <style>
     body{
         margin: auto;
-        padding: auto;
-        background-image: url("../enc.png");
+        padding: 0;
+        background-image: url("static/enc.png");
 
     }
-    #genreateKey{
+    #generateKey{
         width: 200px;
         height: 300px;
         background-image: linear-gradient(to right top, deeppink,blue);
     }
-    .formbox{
+    .formBox{
         width: 100%;
         height: 90vh;
     }
     h1{
-        color: black yellow;
+        color: black;
     }
 </style>
 <body>
     <div class="encryptionHeader">
         <h1>Encryption World</h1>
     </div>
-    <div class="formbox">
+    <div class="formBox">
         <h1>Generate Key</h1>
-        <form id="generatekey" action="/genKey" method="POST">
+        <form id="generateKey" action="/genKey" method="POST">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required placeholder="abc@xyz.com">
             <br>
