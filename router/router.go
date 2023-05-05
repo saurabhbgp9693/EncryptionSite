@@ -6,6 +6,7 @@ import (
 )
 
 func RouterHandler() {
+
 	// Register the route handlers
 	http.HandleFunc("/", controller.Handlers)
 }

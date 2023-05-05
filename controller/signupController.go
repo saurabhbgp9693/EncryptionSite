@@ -11,16 +11,14 @@ func Handlers(w http.ResponseWriter, r *http.Request) {
 	case "/generate-key":
 		services.KeyGen(w, r)
 	case "/genKey":
-		services.GenKeyHandler(w, r)
+		services.GenKeyHandler(r)
 	case "/encrypt":
 		services.EncryptHandler(w, r)
 	case "/enc-message":
 		services.EncryptMessage(w, r)
 	case "/decrypt":
 		services.DecryptPage(w, r)
-	case "/dec-message":
-		services.DecryptMessage(w, r)
 	default:
-		services.HomePage(w, r)
+		services.HomePage(w)
 	}
 }

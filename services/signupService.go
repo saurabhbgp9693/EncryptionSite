@@ -14,7 +14,7 @@ import (
 
 var path = "static/"
 
-func HomePage(w http.ResponseWriter, r *http.Request) {
+func HomePage(w http.ResponseWriter) {
 	filename := "home.html"
 
 	t, err := template.ParseFiles(path + filename)
@@ -31,14 +31,14 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 func DecryptPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
-		cipher := r.FormValue("cipher")
+		cipherM := r.FormValue("cipher")
 		key := r.FormValue("key")
-		plaintext, err := Decrypt([]byte(key), cipher)
+		plaintext, err := Decrypt([]byte(key), cipherM)
 		if err != nil {
 			fmt.Println("failed to decrypt the message", err)
 		}
 
-		fmt.Fprintf(w, `
+		_, err = fmt.Fprintf(w, `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
@@ -137,8 +137,11 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 				</div>
 			</body>
 `, plaintext)
+		if err != nil {
+			fmt.Println("error occur when executing if decryption page", err)
+		}
 	} else {
-		fmt.Fprintf(w, `<!DOCTYPE html>
+		_, err := fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
 		<head>
 		<meta charset="UTF-8">
@@ -233,17 +236,10 @@ border-radius: 3px;
 </div>
 </body>
 `)
+		if err != nil {
+			fmt.Println("error occur when executing else in decryption page", err)
+		}
 	}
-}
-
-func DecryptMessage(w http.ResponseWriter, r *http.Request) {
-	cipher := r.FormValue("cipher")
-	key := r.FormValue("key")
-	plaintext, err := Decrypt([]byte(key), cipher)
-	if err != nil {
-		fmt.Println("failed to decrypt the message", err)
-	}
-	fmt.Fprintln(w, plaintext)
 }
 
 func KeyGen(w http.ResponseWriter, r *http.Request) {
@@ -272,7 +268,7 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		//	return
 		//}
 
-		fmt.Fprintf(w, `<!DOCTYPE html>
+		_, err = fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
 		<head>
 		   <meta charset="UTF-8">
@@ -375,6 +371,9 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		</div>
 		</body>
 		</html>`, str)
+		if err != nil {
+			fmt.Println("error occur when executing if condition in key generation page", err)
+		}
 	} else {
 		filename := "keygen.html"
 		t, err := template.ParseFiles(path + filename)
@@ -392,7 +391,7 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GenKeyHandler(w http.ResponseWriter, r *http.Request) {
+func GenKeyHandler(r *http.Request) {
 	key, err := GenerateAESKey(128)
 	if err != nil {
 		fmt.Println("failed to generate key", err)
@@ -405,7 +404,7 @@ func GenKeyHandler(w http.ResponseWriter, r *http.Request) {
 	SendKey(mail, data)
 }
 
-//func EncryptHandler(w http.ResponseWriter, r *http.Request) {
+//	func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 //	filename := "encrypt.html"
 //	t, err := template.ParseFiles(path + filename)
 //	if err != nil {
@@ -427,7 +426,7 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("failed to encrypt the message", err)
 		}
-		fmt.Fprintf(w, `
+		_, err = fmt.Fprintf(w, `
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
@@ -523,9 +522,12 @@ label{
 		</body>
 		</html>
 	`, ciphertext)
+		if err != nil {
+			fmt.Println("error occur when executing if condition in encryption page", err)
+		}
 	} else {
 
-		fmt.Fprintf(w, `<!DOCTYPE html>
+		_, err := fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
 		<head>
 			<meta charset="UTF-8">
@@ -543,7 +545,7 @@ label{
 		.container{
 			background-color: aqua;
 			height: 100vh;
-			width: 100%;
+			width: 15in;
 		
 		}
 		.encryptionHeader{
@@ -618,6 +620,9 @@ label{
 		</div>
 		</body>
 		</html>`)
+		if err != nil {
+			fmt.Println("error occur when executing else condition in encryption page", err)
+		}
 	}
 
 }
@@ -629,7 +634,7 @@ func EncryptMessage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println("failed to encrypt the message", err)
 	}
-	fmt.Fprintln(w, encryptedMessage)
+	_, err = fmt.Fprintln(w, encryptedMessage)
 }
 
 func Encrypt(key []byte, message string) (string, error) {

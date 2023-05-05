@@ -12,12 +12,6 @@ func main() {
 	// http.HandleFunc("/", controller.Handlers)
 	router.RouterHandler()
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8082", nil))
 
 }
-
-// func hello(w http.ResponseWriter, r *http.Request){
-
-// 	fmt.Fprint(w,"hello World",nil)
-
-// }
