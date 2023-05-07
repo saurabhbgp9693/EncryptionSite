@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	// router.RouterHandler()
 	// Start the server
 	// http.HandleFunc("/", controller.Handlers)
