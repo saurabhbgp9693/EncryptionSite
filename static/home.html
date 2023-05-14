@@ -5,79 +5,40 @@
 				<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+				<link rel="stylesheet" href='/static/css/style.css'>
+				<link rel="stylesheet" href='/static/css/nav.css'>
 				<title>My Form</title>
-				<style>
-					body {
-						background-image: url('/static/enc.jpg');
-						background-size: cover;
-						padding: 20px;
-						font-family: Arial, sans-serif;
-						margin: 0;
-						height: 700px;
-						color: #fff;
-					}
-					
-					h1 {
-						text-align: center;
-						margin-top: 50px;
-						font-size: 3em;
-						text-shadow: 2px 2px #000;
-					}
-			
-					.form-container {
-						/* background-color: rgba(255, 255, 255, 0.8); */
-						border-radius: 5px;
-						margin: 50px auto;
-						padding: 20px;
-						width: 20%;
-						max-width: 800px;
-						background-image: linear-gradient(to top left,rgb(255, 0, 140),blue);
-						box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-					}
-			
-					h2 {
-						margin-top: 20px;
-						font-size: 1.5em;
-						text-shadow: 1px 1px #000;
-					}
-			
-					form {
-						display: flex;
-						flex-direction: column;
-						margin-bottom: 20px;
-					}
-					.encryptionHeader{
-						background-image: linear-gradient(to top left,rgb(107, 107, 223),rgba(108, 103, 103, 0.749));
-						background-color: transparent;
-					}
-					.empty{
-						width: 70%;
-					}
-			
-					button {
-						background-color: #4CAF50;
-						color: #fff;
-						border: none;
-						padding: 10px 20px;
-						border-radius: 3px;
-						cursor: pointer;
-						margin-top: 10px;
-						font-size: 1.2em;
-						text-shadow: 1px 1px #000;
-					}
-			
-					button:hover {
-						background-color: #3e8e41;
-					}
-					.bodyBox{
-						display: flex;
-					}
-				</style>
+				
 			</head>
 			<body>
-			<div class="encryptionHeader">
-			<h1>Encryption World</h1>
-		</div>
+
+
+				<div class="encryptionHeader">
+					<div class="nav-logo">
+					<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+					</div>
+
+					<div class="nav-title">
+						<h1>Encryption World</h1>
+					</div>
+		
+					<ul class="nav-list">
+						<li class="nav-item">
+							<a href="#home" >Home</a>
+						</li>
+
+						<li class="nav-item">
+							<a href="#about" >About</a>
+						</li>
+						<li class="nav-item">
+							<a href="#contactus" >Contact Us</a>
+						</li>
+						<li class="nav-item">
+							<a href="./login_and_signup.php" >Account</a>
+						</li>
+					</ul>
+				</div>
+
 		<div class="bodyBox">
 		
 			<div class="form-container">

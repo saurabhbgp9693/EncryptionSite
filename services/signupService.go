@@ -49,14 +49,39 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
  				<link rel="stylesheet" href="/static/css/enc.css">
+ 				<link rel="stylesheet" href="/static/css/nav.css">
 				<title>Decrypt Cipher</title>
 			</head>
 		
 			<body>
 				<div class="container">
-					<div class="encryptionHeader">
-						<h1>Encryption World</h1>
-					</div>
+					
+				<div class="encryptionHeader">
+				<div class="nav-logo">
+				<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+				</div>
+
+				<div class="nav-title">
+					<h1>Encryption World</h1>
+				</div>
+	
+				<ul class="nav-list">
+					<li class="nav-item">
+						<a href="#home" >Home</a>
+					</li>
+
+					<li class="nav-item">
+						<a href="#about" >About</a>
+					</li>
+					<li class="nav-item">
+						<a href="#contactus" >Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a href="./login_and_signup.php" >Account</a>
+					</li>
+				</ul>
+			</div>
+
 					<div class="formbox">
 						<h1 style="text-align: center">Decrypt Message</h1>
 						<hr style="color: #5d0000; width: 4in">
@@ -94,13 +119,38 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
  		<link rel="stylesheet" href="/static/css/enc.css">
+ 		<link rel="stylesheet" href="/static/css/nav.css">
 		<title>Decrypt Cipher</title>
 		</head>
 		<body>
 		<div class="container">
+		
 		<div class="encryptionHeader">
-		<h1>Encryption World</h1>
+		<div class="nav-logo">
+		<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
 		</div>
+
+		<div class="nav-title">
+			<h1>Encryption World</h1>
+		</div>
+
+		<ul class="nav-list">
+			<li class="nav-item">
+				<a href="#home" >Home</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#about" >About</a>
+			</li>
+			<li class="nav-item">
+				<a href="#contactus" >Contact Us</a>
+			</li>
+			<li class="nav-item">
+				<a href="./login_and_signup.php" >Account</a>
+			</li>
+		</ul>
+	</div>
+
 		<div class="formbox">
 		<h1 style="text-align: center">Decrypt Message</h1>
 		<hr style="color: #5d0000; width: 4in">
@@ -153,13 +203,38 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
 			<link rel="stylesheet" href="/static/css/enc.css">
+			<link rel="stylesheet" href="/static/css/nav.css">
 		   <title>Key Generation</title>
 		</head>
 		<body>
 		<div class="container">
-		   <div class="encryptionHeader">
-		       <h1>Encryption World</h1>
-		   </div>
+		   
+				<div class="encryptionHeader">
+				<div class="nav-logo">
+				<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+				</div>
+
+				<div class="nav-title">
+					<h1>Encryption World</h1>
+				</div>
+	
+				<ul class="nav-list">
+					<li class="nav-item">
+						<a href="#home" >Home</a>
+					</li>
+
+					<li class="nav-item">
+						<a href="#about" >About</a>
+					</li>
+					<li class="nav-item">
+						<a href="#contactus" >Contact Us</a>
+					</li>
+					<li class="nav-item">
+						<a href="./login_and_signup.php" >Account</a>
+					</li>
+				</ul>
+			</div>
+
 		   <div class="formbox">
 		
 		       <h1>Generate Key</h1>
@@ -202,7 +277,6 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
 }
 
 func GenKeyHandler(r *http.Request) {
@@ -231,7 +305,8 @@ func GenKeyHandler(r *http.Request) {
 //		return
 //	}
 //
-//}
+// }
+
 func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		message := r.FormValue("message")
@@ -252,13 +327,38 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
 			<title>Encrypt Message</title>
 			<link rel="stylesheet" href="/static/css/enc.css">
+			<link rel="stylesheet" href="/static/css/nav.css">
 		</head>
 	
 		<body >
 		<div class="container">
-			<div class="encryptionHeader">
-				<h1>Encryption World</h1>
-			</div>
+			
+		<div class="encryptionHeader">
+		<div class="nav-logo">
+		<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+		</div>
+
+		<div class="nav-title">
+			<h1>Encryption World</h1>
+		</div>
+
+		<ul class="nav-list">
+			<li class="nav-item">
+				<a href="#home" >Home</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#about" >About</a>
+			</li>
+			<li class="nav-item">
+				<a href="#contactus" >Contact Us</a>
+			</li>
+			<li class="nav-item">
+				<a href="./login_and_signup.php" >Account</a>
+			</li>
+		</ul>
+	</div>
+
 			<div class="formbox">
 				<h1 style="text-align: center">Encrypt Message</h1>
 				<hr style="color: black; width: 4in">
@@ -298,13 +398,38 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
 			<title>Encrypt Message </title>
 			<link rel="stylesheet" href="/static/css/enc.css">
+			<link rel="stylesheet" href="/static/css/nav.css">
 		</head>
 		
 		<body>
 		<div class="container">
-			<div class="encryptionHeader">
-				<h1>Encryption World</h1>
-			</div>
+			
+		<div class="encryptionHeader">
+		<div class="nav-logo">
+		<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+		</div>
+
+		<div class="nav-title">
+			<h1>Encryption World</h1>
+		</div>
+
+		<ul class="nav-list">
+			<li class="nav-item">
+				<a href="#home" >Home</a>
+			</li>
+
+			<li class="nav-item">
+				<a href="#about" >About</a>
+			</li>
+			<li class="nav-item">
+				<a href="#contactus" >Contact Us</a>
+			</li>
+			<li class="nav-item">
+				<a href="./login_and_signup.php" >Account</a>
+			</li>
+		</ul>
+	</div>
+
 			<div class="formbox">
 				<h1 style="text-align: center">Encrypt Message</h1>
 				<hr style="color: black; width: 4in">
@@ -340,9 +465,9 @@ func EncryptMessage(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("failed to encrypt the message", err)
 	}
 	_, err = fmt.Fprintln(w, encryptedMessage)
-	if err!=nil{
+	if err != nil {
 		panic(err)
-	} 
+	}
 }
 
 func Encrypt(key []byte, message string) (string, error) {
