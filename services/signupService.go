@@ -45,70 +45,13 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 				<meta charset="UTF-8">
 				<meta http-equiv="X-UA-Compatible" content="IE=edge">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Document</title>
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+ 				<link rel="stylesheet" href="/static/css/enc.css">
+				<title>Decrypt Cipher</title>
 			</head>
-			<style>
-				body{
-					margin: auto;
-					padding: 0;
-					background-color: cyan;
-				}
-				.container{
-					background-color: aqua;
-					height: 100vh;
-					width: 15in;
-			
-				}
-				.encryptionHeader{
-					text-align: center;
-					background-image: linear-gradient(to right bottom,blue,black);
-					color: deeppink;
-				}
-				.formbox{
-					justify-content: right;
-					margin:100px auto;
-					width: 5in;
-					height: 5in;
-			
-					border-radius: 10px 2px;
-					background-image: linear-gradient(to left top, deeppink,blue);
-				}
-			
-				form input[type="submit"]{
-					float: right;
-					margin:15px;
-					margin-right: 35px;
-			
-					background-color: yellow;
-					width: 2.2in;
-					padding: 10px;
-					box-shadow: #2d2d2d 4px 4px;
-					border-radius: 4px;
-				}
-			
-				input, textarea{
-					margin: 5px;
-					margin-left: 40px;
-					width: 4in;
-					padding: 10px;
-					resize: none;
-					box-shadow: #2d2d2d 4px 4px;
-					border-radius: 4px 10px;
-				}
-				label{
-					width: 2in;
-					font-family: Arial, sans-serif;
-					font-weight: bold;
-					color: darksalmon;
-					margin:10px;
-					text-shadow: #2d2d2d 1px 2px;
-					border-radius: 3px;
-			
-				}
-			
-			
-			
-			</style>
+		
 			<body>
 				<div class="container">
 					<div class="encryptionHeader">
@@ -116,7 +59,7 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 					</div>
 					<div class="formbox">
 						<h1 style="text-align: center">Decrypt Message</h1>
-						<hr style="color: black; width: 4in">
+						<hr style="color: #5d0000; width: 4in">
 						<form id="enc-form" method="POST">
 							<label for="message">Cipher Text :</label><br>
 							<input style="height: 0.7in; " name="cipher" id="cipher" required>
@@ -147,95 +90,37 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+ 		<link rel="stylesheet" href="/static/css/enc.css">
+		<title>Decrypt Cipher</title>
 		</head>
-		<style>
-			body{
-				margin: auto;
-				padding: 0;
-				background-color: cyan;
-			}
-		.container{
-			background-color: aqua;
-			height: 100vh;
-			width: 15in;
-
-		}
-		.encryptionHeader{
-			text-align: center;
-			background-image: linear-gradient(to right bottom,blue,black);
-			color: deeppink;
-		}
-		.formbox{
-			justify-content: right;
-			margin:100px auto;
-			width: 5in;
-			height: 5in;
-
-			border-radius: 10px 2px;
-			background-image: linear-gradient(to left top, deeppink,blue);
-		}
-
-		form input[type="submit"]{
-float: right;
-margin:15px;
-margin-right: 35px;
-
-background-color: yellow;
-width: 2.2in;
-padding: 10px;
-box-shadow: #2d2d2d 4px 4px;
-border-radius: 4px;
-}
-
-input, textarea{
-margin: 5px;
-margin-left: 40px;
-width: 4in;
-padding: 10px;
-resize: none;
-box-shadow: #2d2d2d 4px 4px;
-border-radius: 4px 10px;
-}
-label{
-width: 2in;
-font-family: Arial, sans-serif;
-font-weight: bold;
-color: darksalmon;
-margin:10px;
-text-shadow: #2d2d2d 1px 2px;
-border-radius: 3px;
-
-}
-
-
-
-</style>
-<body>
-<div class="container">
-<div class="encryptionHeader">
-<h1>Encryption World</h1>
-</div>
-<div class="formbox">
-<h1 style="text-align: center">Decrypt Message</h1>
-<hr style="color: black; width: 4in">
-<form id="enc-form" method="POST">
-<label for="message">Cipher Text :</label><br>
-<input style="height: 0.7in; " name="cipher" id="cipher" required>
-<br>
-<label for="key">Key :</label>
-<br>
-<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
-<br>
-<input type="submit" name="submit" id="submit" value="Decrypt">
-<br>
-<br>
-<br>
-</form>
-</div>
-</div>
-</body>
-`)
+		<body>
+		<div class="container">
+		<div class="encryptionHeader">
+		<h1>Encryption World</h1>
+		</div>
+		<div class="formbox">
+		<h1 style="text-align: center">Decrypt Message</h1>
+		<hr style="color: #5d0000; width: 4in">
+		<form id="enc-form" method="POST">
+		<label for="message">Cipher Text :</label><br>
+		<input style="height: 0.7in; " name="cipher" id="cipher" required>
+		<br>
+		<label for="key">Key :</label>
+		<br>
+		<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+		<br>
+		<input type="submit" name="submit" id="submit" value="Decrypt">
+		<br>
+		<br>
+		<br>
+		</form>
+		</div>
+		</div>
+		</body>
+		`)
 		if err != nil {
 			fmt.Println("error occur when executing else in decryption page", err)
 		}
@@ -257,16 +142,6 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		SendKey(mail, data)
 		//filename := "keygen.html"
 		str := "key successfully generated and sent"
-		//t, err := template.ParseFiles(path + filename)
-		//if err != nil {
-		//	fmt.Println("Error when parsing file", err)
-		//	return
-		//}
-		//err = t.ExecuteTemplate(w, filename, str)
-		//if err != nil {
-		//	fmt.Println("Error when executing template", err)
-		//	return
-		//}
 
 		_, err = fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
@@ -274,75 +149,14 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		   <meta charset="UTF-8">
 		   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		   <title>Document</title>
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+			<link rel="stylesheet" href="/static/css/enc.css">
+		   <title>Key Generation</title>
 		</head>
-		<style>
-		   body{
-		       margin: auto;
-		       padding: 0;
-		       //background-color: cyan;
-		   }
-		   .container{
-		       background-color: aqua;
-		       height: 100vh;
-		       width: 15in;
-		
-		   }
-		   .encryptionHeader{
-		       text-align: center;
-		       background-image: linear-gradient(to right bottom,blue,black);
-		       color: deeppink;
-		   }
-		   .formbox{
-		       justify-content: right;
-		       margin:100px auto;
-		       width: 5in;
-		       height: 5in;
-		
-		       border-radius: 10px 2px;
-		       background-image: linear-gradient(to left top, deeppink,blue);
-		   }
-		
-		   form input[type="submit"]{
-		       float: right;
-		       margin:15px;
-		       margin-right: 35px;
-		
-		       background-color: yellow;
-		       width: 2.2in;
-		       padding: 10px;
-		       box-shadow: #2d2d2d 4px 4px;
-		       border-radius: 4px;
-		   }
-		
-		   input, textarea{
-		       margin: 5px;
-		       margin-left: 40px;
-		       width: 4in;
-		       padding: 10px;
-		       resize: none;
-		       box-shadow: #2d2d2d 4px 4px;
-		       border-radius: 4px 10px;
-		   }
-		   label{
-		       width: 2in;
-		       font-family: Arial, sans-serif;
-		       font-weight: bold;
-		       color: darksalmon;
-		       margin:10px;
-		       text-shadow: #2d2d2d 1px 2px;
-		       border-radius: 3px;
-		
-		   }
-		   h1{
-		       text-align: center;
-		   }
-		
-		
-		
-		</style>
 		<body>
-		<div class="container" style="background-image: url('enc.jpg');">
+		<div class="container">
 		   <div class="encryptionHeader">
 		       <h1>Encryption World</h1>
 		   </div>
@@ -433,68 +247,14 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 			<meta charset="UTF-8">
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Encrypt Message    </title>
-			<link rel="stylesheet" href="style.css">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+			<title>Encrypt Message</title>
+			<link rel="stylesheet" href="/static/css/enc.css">
 		</head>
-		<style>
-body{
-    margin: auto;
-    padding: 0;
-    background-color: cyan;
-}
-.container{
-    background-color: aqua;
-    height: 100vh;
-    width: 15in;
-
-}
-.encryptionHeader{
-    text-align: center;
-    background-image: linear-gradient(to right bottom,blue,black);
-    color: deeppink;
-}
-.formbox{
-    justify-content: right;
-    margin:100px auto;
-    width: 5in;
-    height: 5in;
-
-    border-radius: 10px 2px;
-    background-image: linear-gradient(to left top, deeppink,blue);
-}
-
-form input[type="submit"]{
-    float: right;
-    margin:15px;
-    margin-right: 35px;
-
-    background-color: yellow;
-    width: 2.2in;
-    padding: 10px;
-    box-shadow: #2d2d2d 4px 4px;
-    border-radius: 4px;
-}
-
-input, textarea{
-    margin: 5px;
-    margin-left: 40px;
-    width: 4in;
-    padding: 10px;
-    resize: none;
-    box-shadow: #2d2d2d 4px 4px;
-    border-radius: 4px 10px;
-}
-label{
-    width: 2in;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    color: darksalmon;
-    margin:10px;
-    text-shadow: #2d2d2d 1px 2px;
-    border-radius: 3px;
-
-}</style>
-		<body>
+	
+		<body >
 		<div class="container">
 			<div class="encryptionHeader">
 				<h1>Encryption World</h1>
@@ -533,68 +293,13 @@ label{
 			<meta charset="UTF-8">
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Encrypt Message    </title>
-			<link rel="stylesheet" href="style.css">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+			<title>Encrypt Message </title>
+			<link rel="stylesheet" href="/static/css/enc.css">
 		</head>
-		<style>
-		body{
-			margin: auto;
-			padding: 0;
-			background-color: cyan;
-		}
-		.container{
-			background-color: aqua;
-			height: 100vh;
-			width: 15in;
 		
-		}
-		.encryptionHeader{
-			text-align: center;
-			background-image: linear-gradient(to right bottom,blue,black);
-			color: deeppink;
-		}
-		.formbox{
-			justify-content: right;
-			margin:100px auto;
-			width: 5in;
-			height: 5in;
-		
-			border-radius: 10px 2px;
-			background-image: linear-gradient(to left top, deeppink,blue);
-		}
-		
-		form input[type="submit"]{
-			float: right;
-			margin:15px;
-			margin-right: 35px;
-		
-			background-color: yellow;
-			width: 2.2in;
-			padding: 10px;
-			box-shadow: #2d2d2d 4px 4px;
-			border-radius: 4px;
-		}
-		
-		input, textarea{
-			margin: 5px;
-			margin-left: 40px;
-			width: 4in;
-			padding: 10px;
-			resize: none;
-			box-shadow: #2d2d2d 4px 4px;
-			border-radius: 4px 10px;
-		}
-		label{
-			width: 2in;
-			font-family: Arial, sans-serif;
-			font-weight: bold;
-			color: darksalmon;
-			margin:10px;
-			text-shadow: #2d2d2d 1px 2px;
-			border-radius: 3px;
-		
-		}
-		</style>
 		<body>
 		<div class="container">
 			<div class="encryptionHeader">
