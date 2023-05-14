@@ -635,6 +635,9 @@ func EncryptMessage(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("failed to encrypt the message", err)
 	}
 	_, err = fmt.Fprintln(w, encryptedMessage)
+	if err!=nil{
+		panic(err)
+	} 
 }
 
 func Encrypt(key []byte, message string) (string, error) {
