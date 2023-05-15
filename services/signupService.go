@@ -4,7 +4,10 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
 	"encoding/base64"
+	"encoding/pem"
 	"fmt"
 	"html/template"
 	"io"
@@ -180,20 +183,39 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 func KeyGen(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
-		key, err := GenerateAESKey(128)
-		if err != nil {
-			fmt.Println("failed to generate key", err)
+		keyType := r.FormValue("dropdown")
+		if keyType == "aes" {
+
+			key, err := GenerateAESKey(128)
+			if err != nil {
+				fmt.Println("failed to generate key", err)
+			}
+
+			data := fmt.Sprintf("%x", key)
+
+			email := r.FormValue("email")
+			var mail []string
+			mail = append(mail, email)
+
+			SendAESKey(mail, data)
+		} else {
+			publicKey, privateKey := GenerateRSAKey()
+
+			email := r.FormValue("email")
+			var mail []string
+			mail = append(mail, email)
+
+			SendRSAKey(mail, publicKey, &privateKey)
 		}
+
 		email := r.FormValue("email")
 		var mail []string
 		mail = append(mail, email)
 
-		data := fmt.Sprintf("%x", key)
-		SendKey(mail, data)
 		//filename := "keygen.html"
 		str := "key successfully generated and sent"
 
-		_, err = fmt.Fprintf(w, `<!DOCTYPE html>
+		_, err := fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
 		<head>
 		   <meta charset="UTF-8">
@@ -241,17 +263,14 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		       <hr style="color: black; width: 4in">
 		
 		
-		       <form id="enc-form" method="POST">
+		       <form id="enc-form" method="GET">
 		           <br>
 		           <br>
-		           <label for="email">Email:</label>
-		           <br>
-		           <input type="email" id="email" name="email" required placeholder="abc@xyz.com">
 		           <br>
 		           <br>
-                   <h3 style="color: white; text-align:right ; margin-right:35px">%s<h3>
+                   <h3 style="color: white; text-align:right ; margin-right:35px">%s to %s<h3>
 		           <br>
-		           <input type="submit" name="submit" id="submit" value="Send">
+		           <input type="submit" name="submit" id="submit" value="Go Back">
 		           <br>
 					
 		
@@ -259,7 +278,7 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		   </div>
 		</div>
 		</body>
-		</html>`, str)
+		</html>`, str, mail[0])
 		if err != nil {
 			fmt.Println("error occur when executing if condition in key generation page", err)
 		}
@@ -279,17 +298,16 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GenKeyHandler(r *http.Request) {
-	key, err := GenerateAESKey(128)
-	if err != nil {
-		fmt.Println("failed to generate key", err)
-	}
-	email := r.FormValue("email")
-	var mail []string
-	mail = append(mail, email)
+func GenerateRSAKey() (rsa.PublicKey, rsa.PrivateKey) {
 
-	data := fmt.Sprintf("%x", key)
-	SendKey(mail, data)
+	key, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	pk := key.PublicKey
+
+	return pk, *key
 }
 
 func AboutPage(w http.ResponseWriter) {
@@ -536,7 +554,7 @@ func GenerateAESKey(keySize int) ([]byte, error) {
 	return key, nil
 }
 
-func SendKey(receiverEmail []string, key string) {
+func SendAESKey(receiverEmail []string, key string) {
 	var to = receiverEmail
 	from := "saurabhbgp9693@gmail.com"
 	password := "ycdwztmuofrelctr"
@@ -550,4 +568,68 @@ func SendKey(receiverEmail []string, key string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func SendRSAKey(receiverEmail []string, pubKey rsa.PublicKey, priKey *rsa.PrivateKey) {
+	var to = receiverEmail
+	from := "saurabhbgp9693@gmail.com"
+	password := "ycdwztmuofrelctr"
+	msg := "Subject: Hello!\n\nYour RSA Keys are:\n\n"
+
+	priKeyString, err := RSAPriKeyToString(priKey)
+	if err != nil {
+		panic(err)
+	}
+
+	pubKeyString, err := RSAPubKeyToString(pubKey)
+	if err != nil {
+		panic(err)
+	}
+
+	msg = msg + pubKeyString + "\n" + priKeyString
+
+	err = smtp.SendMail("smtp.gmail.com:587",
+		smtp.PlainAuth("", from, password, "smtp.gmail.com"),
+		from, []string{to[0]}, []byte(msg))
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func RSAPubKeyToString(pubKey rsa.PublicKey) (string, error) {
+	// Convert the public key to bytes
+	publicKeyBytes, err := x509.MarshalPKIXPublicKey(&pubKey)
+	if err != nil {
+		fmt.Println("Error converting public key to bytes:", err)
+		return "nil", err
+	}
+
+	// Create a PEM encoded public key string
+	publicKeyPem := pem.EncodeToMemory(&pem.Block{
+		Type:  "PUBLIC KEY",
+		Bytes: publicKeyBytes,
+	})
+
+	// Convert the PEM encoded public key to a string
+	publicKeyString := string(publicKeyPem)
+	return publicKeyString, nil
+
+}
+
+func RSAPriKeyToString(priKey *rsa.PrivateKey) (string, error) {
+
+	// Convert the private key to bytes
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(priKey) // or x509.MarshalPKCS8PrivateKey(privateKey)
+
+	// Create a PEM encoded private key string
+	privateKeyPem := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY", // or "PRIVATE KEY" for PKCS8
+		Bytes: privateKeyBytes,
+	})
+
+	// Convert the PEM encoded private key to a string
+	privateKeyString := string(privateKeyPem)
+
+	return privateKeyString, nil
 }

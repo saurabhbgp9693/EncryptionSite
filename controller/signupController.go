@@ -10,8 +10,6 @@ func Handlers(w http.ResponseWriter, r *http.Request) {
 
 	case "/generate-key":
 		services.KeyGen(w, r)
-	case "/genKey":
-		services.GenKeyHandler(r)
 	case "/encrypt":
 		services.EncryptHandler(w, r)
 	case "/enc-message":
