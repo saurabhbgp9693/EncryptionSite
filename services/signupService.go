@@ -67,17 +67,17 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 	
 				<ul class="nav-list">
 					<li class="nav-item">
-						<a href="#home" >Home</a>
+						<a href="/" >Home</a>
 					</li>
 
 					<li class="nav-item">
-						<a href="#about" >About</a>
+						<a href="/about" >About</a>
 					</li>
 					<li class="nav-item">
 						<a href="#contactus" >Contact Us</a>
 					</li>
 					<li class="nav-item">
-						<a href="./login_and_signup.php" >Account</a>
+						<a href="#" >Account</a>
 					</li>
 				</ul>
 			</div>
@@ -136,17 +136,17 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 
 		<ul class="nav-list">
 			<li class="nav-item">
-				<a href="#home" >Home</a>
+				<a href="/" >Home</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="#about" >About</a>
+				<a href="/about" >About</a>
 			</li>
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
 			<li class="nav-item">
-				<a href="./login_and_signup.php" >Account</a>
+				<a href="#" >Account</a>
 			</li>
 		</ul>
 	</div>
@@ -220,17 +220,17 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 	
 				<ul class="nav-list">
 					<li class="nav-item">
-						<a href="#home" >Home</a>
+						<a href="/" >Home</a>
 					</li>
 
 					<li class="nav-item">
-						<a href="#about" >About</a>
+						<a href="/about" >About</a>
 					</li>
 					<li class="nav-item">
 						<a href="#contactus" >Contact Us</a>
 					</li>
 					<li class="nav-item">
-						<a href="./login_and_signup.php" >Account</a>
+						<a href="#" >Account</a>
 					</li>
 				</ul>
 			</div>
@@ -292,20 +292,20 @@ func GenKeyHandler(r *http.Request) {
 	SendKey(mail, data)
 }
 
-//	func EncryptHandler(w http.ResponseWriter, r *http.Request) {
-//	filename := "encrypt.html"
-//	t, err := template.ParseFiles(path + filename)
-//	if err != nil {
-//		fmt.Println("Error when parsing file", err)
-//		return
-//	}
-//	err = t.ExecuteTemplate(w, filename, nil)
-//	if err != nil {
-//		fmt.Println("Error when executing template", err)
-//		return
-//	}
-//
-// }
+func AboutPage(w http.ResponseWriter) {
+	filename := "about.html"
+	t, err := template.ParseFiles(path + filename)
+	if err != nil {
+		fmt.Println("Error when parsing file", err)
+		return
+	}
+	err = t.ExecuteTemplate(w, filename, nil)
+	if err != nil {
+		fmt.Println("Error when executing template", err)
+		return
+	}
+
+}
 
 func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
@@ -344,17 +344,17 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 
 		<ul class="nav-list">
 			<li class="nav-item">
-				<a href="#home" >Home</a>
+				<a href="/" >Home</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="#about" >About</a>
+				<a href="/about" >About</a>
 			</li>
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
 			<li class="nav-item">
-				<a href="./login_and_signup.php" >Account</a>
+				<a href="#" >Account</a>
 			</li>
 		</ul>
 	</div>
@@ -415,17 +415,17 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 
 		<ul class="nav-list">
 			<li class="nav-item">
-				<a href="#home" >Home</a>
+				<a href="/" >Home</a>
 			</li>
 
 			<li class="nav-item">
-				<a href="#about" >About</a>
+				<a href="about" >About</a>
 			</li>
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
 			<li class="nav-item">
-				<a href="./login_and_signup.php" >Account</a>
+				<a href="#" >Account</a>
 			</li>
 		</ul>
 	</div>

@@ -1,6 +1,7 @@
 body {
-    background-image: url('/static/img/dark.jpg');
+    background-image: url('/static/img/rb.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     padding: 20px;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -20,9 +21,9 @@ body {
     text-shadow: 4px 4px #5d0000;
 }
 h1{
-    font-family: 'Bitter', serif;
-    font-family: 'Noto Sans', sans-serif;
-    font-family: 'Pacifico', cursive;
+    /*font-family: 'Bitter', serif;*/
+    /*font-family: 'Noto Sans', sans-serif;*/
+    /*font-family: 'Pacifico', cursive;*/
 }
 
 .formbox{

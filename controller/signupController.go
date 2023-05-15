@@ -18,6 +18,9 @@ func Handlers(w http.ResponseWriter, r *http.Request) {
 		services.EncryptMessage(w, r)
 	case "/decrypt":
 		services.DecryptPage(w, r)
+	case "/about":
+		services.AboutPage(w)
+
 	default:
 		services.HomePage(w)
 	}
