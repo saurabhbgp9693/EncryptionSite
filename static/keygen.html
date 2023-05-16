@@ -43,13 +43,15 @@
         <h1>Generate Key</h1>
         <hr style="color: black; width: 4in">
 
-        <label for="dropdown">Select type of Key:</label>
-        <select id="dropdown">
-            <option name="aes" value="AES">AES Key</option>
-            <option name="rsa" value="RSA">RSA Keys</option>
-        </select>
+
 
         <form id="enc-form" method="POST">
+            <br>
+            <label for="dropdown">Select type of Key:</label>
+            <select name="dropdown">
+                <option  value="aes">AES Key</option>
+                <option  value="rsa">RSA Keys</option>
+            </select>
             <br>
             <br>
             <label for="email">Email:</label>

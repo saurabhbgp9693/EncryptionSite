@@ -11,7 +11,7 @@ body {
 }
 .container{
     height: 100vh;
-    width: 15in;
+    width: 13.5in;
 }
 
 .encryptionHeader{
@@ -30,7 +30,7 @@ h1{
     justify-content: right;
     margin:100px auto;
     width: 5in;
-    height: 5in;
+    height: 6in;
     border-radius: 10px 20px;
     box-shadow: 10px 13px #5d0000;
     background:transparent ;

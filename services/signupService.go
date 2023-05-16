@@ -5,9 +5,11 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"crypto/rsa"
+	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -34,14 +36,28 @@ func HomePage(w http.ResponseWriter) {
 
 func DecryptPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		var decMessage string
 		cipherM := r.FormValue("cipher")
-		key := r.FormValue("key")
-		plaintext, err := Decrypt([]byte(key), cipherM)
-		if err != nil {
-			fmt.Println("failed to decrypt the message", err)
+		keyType := r.FormValue("dropdown")
+		if keyType == "aes" {
+
+			key := r.FormValue("key")
+			plaintext, err := Decrypt([]byte(key), cipherM)
+			if err != nil {
+				fmt.Println("failed to decrypt the message", err)
+			}
+			decMessage = plaintext
+
+		} else if keyType == "rsa" {
+			privateKeyString := r.FormValue("key")
+			privateKey, _ := StringToRSAPriKey(privateKeyString)
+			plaintext := decryptMessage(cipherM, *privateKey)
+			decMessage = plaintext
+		} else {
+			decMessage = "key miss matched"
 		}
 
-		_, err = fmt.Fprintf(w, `
+		_, err := fmt.Fprintf(w, `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
@@ -89,22 +105,30 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 							<label for="message">Cipher Text :</label><br>
 							<input style="height: 0.7in; " name="cipher" id="cipher" required>
 							<br>
+							<label for="dropdown">Select type of Key:</label>
+							
+							<select name="dropdown">
+								<option  value="aes">AES Key</option>
+								<option  value="rsa">RSA Keys</option>
+							</select>
+							<br>
+							<br>
 							<label for="key">Key :</label>
 							<br>
-							<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+							<textarea name="key" required></textarea>
 							<br>
 							<input type="submit" name="submit" id="submit" value="Decrypt">
 							<br>
 							<br>
 							<br>
 							<label for="plaintext">Plaintext :</label><br>
-							<textarea name="plaintext" id="plaintext" readonly>%s</textarea>
+							<textarea name="plaintext" readonly>%s</textarea>
 			
 						</form>
 					</div>
 				</div>
 			</body>
-`, plaintext)
+`, decMessage)
 		if err != nil {
 			fmt.Println("error occur when executing if decryption page", err)
 		}
@@ -156,9 +180,18 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 		<label for="message">Cipher Text :</label><br>
 		<input style="height: 0.7in; " name="cipher" id="cipher" required>
 		<br>
+		<label for="dropdown">Select type of Key:</label>
+		<br>
+		<select name="dropdown">
+                <option  value="aes">AES Key</option>
+                <option  value="rsa">RSA Private Key</option>
+		</select>
+		<br>
+		<br>
 		<label for="key">Key :</label>
 		<br>
-		<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+		<textarea name="key" required></textarea>
+		<br>
 		<br>
 		<input type="submit" name="submit" id="submit" value="Decrypt">
 		<br>
@@ -177,10 +210,13 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 
 func KeyGen(w http.ResponseWriter, r *http.Request) {
 
+	flag := false
 	if r.Method == "POST" {
+		w.Header().Set("Content-Type", "text/html")
 		keyType := r.FormValue("dropdown")
-		if keyType == "aes" {
 
+		if keyType == "aes" {
+			flag = true
 			key, err := GenerateAESKey(128)
 			if err != nil {
 				fmt.Println("failed to generate key", err)
@@ -193,7 +229,8 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 			mail = append(mail, email)
 
 			SendAESKey(mail, data)
-		} else {
+		} else if keyType == "rsa" {
+			flag = true
 			publicKey, privateKey := GenerateRSAKey()
 
 			email := r.FormValue("email")
@@ -203,14 +240,14 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 			SendRSAKey(mail, publicKey, &privateKey)
 		}
 
-		email := r.FormValue("email")
-		var mail []string
-		mail = append(mail, email)
-
 		//filename := "keygen.html"
-		str := "key successfully generated and sent"
+		if flag {
+			email := r.FormValue("email")
+			var mail []string
+			mail = append(mail, email)
+			str := "key successfully generated and sent"
 
-		_, err := fmt.Fprintf(w, `<!DOCTYPE html>
+			_, err := fmt.Fprintf(w, `<!DOCTYPE html>
 		<html lang="en">
 		<head>
 		   <meta charset="UTF-8">
@@ -272,8 +309,76 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 		</div>
 		</body>
 		</html>`, str, mail[0])
-		if err != nil {
-			fmt.Println("error occur when executing if condition in key generation page", err)
+			if err != nil {
+				fmt.Println("error occur when executing if condition in key generation page", err)
+			}
+		} else {
+			str := "Key Type miss matched"
+			_, err := fmt.Fprintf(w, `<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		   <meta charset="UTF-8">
+		   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+			<link rel="stylesheet" href="/static/css/enc.css">
+			<link rel="stylesheet" href="/static/css/nav.css">
+		   <title>Key Generation</title>
+		</head>
+		<body>
+		<div class="container">
+		   
+				<div class="encryptionHeader">
+				<div class="nav-logo">
+				<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+				</div>
+
+				<div class="nav-title">
+					<h1>Encryption World</h1>
+				</div>
+	
+				<ul class="nav-list">
+					<li class="nav-item">
+						<a href="/" >Home</a>
+					</li>
+
+					<li class="nav-item">
+						<a href="/about" >About</a>
+					</li>
+					<li class="nav-item">
+						<a href="#contactus" >Contact Us</a>
+					</li>
+					
+				</ul>
+			</div>
+
+		   <div class="formbox">
+		
+		       <h1>Generate Key</h1>
+		       <hr style="color: black; width: 4in">
+		
+		
+		       <form id="enc-form" method="GET">
+		           <br>
+		           <br>
+		           <br>
+		           <br>
+                   <h3 style="color: white; text-align:right ; margin-right:35px">%s<h3>
+		           <br>
+		           <input type="submit" name="submit" id="submit" value="Go Back">
+		           <br>
+					
+		
+		       </form>
+		   </div>
+		</div>
+		</body>
+		</html>`, str)
+			if err != nil {
+				fmt.Println("error occur when executing if condition in key generation page", err)
+			}
 		}
 	} else {
 		filename := "keygen.html"
@@ -321,12 +426,16 @@ func AboutPage(w http.ResponseWriter) {
 func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		message := r.FormValue("message")
-		key := r.FormValue("key")
-		ciphertext, err := Encrypt([]byte(key), message)
-		if err != nil {
-			fmt.Println("failed to encrypt the message", err)
-		}
-		_, err = fmt.Fprintf(w, `
+		keyType := r.FormValue("dropdown")
+
+		if keyType == "aes" {
+
+			key := r.FormValue("key")
+			ciphertext, err := Encrypt([]byte(key), message)
+			if err != nil {
+				fmt.Println("failed to encrypt the message", err)
+			}
+			_, err = fmt.Fprintf(w, `
 		<!DOCTYPE html>
 		<html lang="en">
 		<head>
@@ -374,9 +483,15 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 					<label for="message">Message :</label><br>
 					<input style="height: 0.7in; " name="message" id="message" required>
 					<br>
+					<label for="dropdown">Select type of Key:</label>
+					<select name="dropdown">
+						<option  value="aes">AES Key</option>
+						<option  value="rsa">RSA Public Key</option>
+					</select>
+					<br>
 					<label for="key">Key :</label>
 					<br>
-					<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+					<textarea name="key" required></textarea>
 					<br>
 					<input type="submit"  name="submit" id="submit" value="Encrypt">
 					<br>
@@ -390,8 +505,85 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 		</body>
 		</html>
 	`, ciphertext)
-		if err != nil {
-			fmt.Println("error occur when executing if condition in encryption page", err)
+			if err != nil {
+				fmt.Println("error occur when executing if condition in encryption page", err)
+			}
+		} else if keyType == "rsa" {
+			key := r.FormValue("key")
+			publicKey, _ := StringToRSAPubKey(key)
+			encMessage := encryptMessage(message, *publicKey)
+
+			fmt.Fprintf(w, `
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<link rel="preconnect" href="https://fonts.googleapis.com">
+					<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+					<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+					<title>Encrypt Message</title>
+					<link rel="stylesheet" href="/static/css/enc.css">
+					<link rel="stylesheet" href="/static/css/nav.css">
+				</head>
+			
+				<body >
+				<div class="container">
+					
+				<div class="encryptionHeader">
+				<div class="nav-logo">
+				<a href="/" ><img src='/static/img/logo.jpg'  alt="image"></a>
+				</div>
+		
+				<div class="nav-title">
+					<h1>Encryption World</h1>
+				</div>
+		
+				<ul class="nav-list">
+					<li class="nav-item">
+						<a href="/" >Home</a>
+					</li>
+		
+					<li class="nav-item">
+						<a href="/about" >About</a>
+					</li>
+					<li class="nav-item">
+						<a href="#contactus" >Contact Us</a>
+					</li>
+					</ul>
+				</div>
+		
+					<div class="formbox">
+						<h1 style="text-align: center">Encrypt Message</h1>
+						<hr style="color: black; width: 4in">
+						<form id="enc-form" method="POST">
+							<label for="message">Message :</label><br>
+							<input style="height: 0.7in; " name="message" id="message" required>
+							<br>
+							<label for="dropdown">Select type of Key:</label>
+							<select name="dropdown">
+								<option  value="aes">AES Key</option>
+								<option  value="rsa">RSA Public Key</option>
+							</select>
+							<br>
+							<label for="key">Key :</label>
+							<br>
+							<textarea name="key" required></textarea>
+							<br>
+							<input type="submit"  name="submit" id="submit" value="Encrypt">
+							<br>
+							<br>
+							<br>
+							<label for="ciphertext">Encrypted Message :</label><br>
+							<textarea name="ciphertext" required>%s</textarea>
+
+						</form>
+					</div>
+				</div>
+				</body>
+				</html>
+				`, encMessage)
 		}
 	} else {
 
@@ -443,9 +635,16 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 					<label for="message">Message :</label><br>
 					<input style="height: 0.7in; " name="message" id="message" required>
 					<br>
+					<label for="dropdown">Select type of Key:</label>
+					<select name="dropdown">
+						<option value="aes">AES Key</option>
+						<option value="rsa">RSA Public Key</option>
+					</select>
+					<br>
 					<label for="key">Key :</label>
 					<br>
-					<input type="text" name="key" id="key" minlength="32" maxlength="32" required>
+					<textarea name="key" required></textarea>
+					
 					<br>
 					<input type="submit"  name="submit" id="submit" value="Encrypt">
 					<br>
@@ -620,4 +819,69 @@ func RSAPriKeyToString(priKey *rsa.PrivateKey) (string, error) {
 	privateKeyString := string(privateKeyPem)
 
 	return privateKeyString, nil
+}
+
+func StringToRSAPubKey(publicKeyString string) (*rsa.PublicKey, error) {
+	// Decode the PEM encoded public key string
+	block, _ := pem.Decode([]byte(publicKeyString))
+	if block == nil || block.Type != "PUBLIC KEY" {
+		return nil, errors.New("Invalid PEM encoded public key")
+	}
+
+	// Parse the DER encoded public key bytes
+	publicKey, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+
+	// Type assert the parsed public key to *rsa.PublicKey
+	rsaPubKey, ok := publicKey.(*rsa.PublicKey)
+	if !ok {
+		return nil, errors.New("Invalid RSA public key")
+	}
+
+	return rsaPubKey, nil
+}
+
+func StringToRSAPriKey(privateKeyString string) (*rsa.PrivateKey, error) {
+	// Decode the PEM encoded private key string
+	pemBlock, _ := pem.Decode([]byte(privateKeyString))
+	if pemBlock == nil {
+		return nil, errors.New("failed to decode PEM block containing private key")
+	}
+
+	// Parse the private key
+	parsedKey, err := x509.ParsePKCS1PrivateKey(pemBlock.Bytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return parsedKey, nil
+}
+
+//	function to encrypt the message using rsa Public key
+func encryptMessage(message string, publicKey rsa.PublicKey) string {
+	label := []byte("OAEP Encrypted")
+	random := rand.Reader
+	ciphertext, err := rsa.EncryptOAEP(sha256.New(), random, &publicKey, []byte(message), label)
+	if err != nil {
+		panic(err)
+	}
+	return base64.StdEncoding.EncodeToString(ciphertext)
+}
+
+//	function to decrypt the message using rsa private key
+func decryptMessage(cipherText string, privateKey rsa.PrivateKey) string {
+	ct, err := base64.StdEncoding.DecodeString(cipherText)
+	if err != nil {
+		panic(err)
+	}
+	label := []byte("OAEP Encrypted")
+	random := rand.Reader
+	plaintext, err := rsa.DecryptOAEP(sha256.New(), random, &privateKey, ct, label)
+	if err != nil {
+		panic(err)
+	}
+
+	return string(plaintext)
 }
