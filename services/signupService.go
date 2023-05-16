@@ -79,9 +79,6 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 					<li class="nav-item">
 						<a href="#contactus" >Contact Us</a>
 					</li>
-					<li class="nav-item">
-						<a href="#" >Account</a>
-					</li>
 				</ul>
 			</div>
 
@@ -148,9 +145,7 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" >Account</a>
-			</li>
+		
 		</ul>
 	</div>
 
@@ -251,9 +246,7 @@ func KeyGen(w http.ResponseWriter, r *http.Request) {
 					<li class="nav-item">
 						<a href="#contactus" >Contact Us</a>
 					</li>
-					<li class="nav-item">
-						<a href="#" >Account</a>
-					</li>
+					
 				</ul>
 			</div>
 
@@ -371,9 +364,6 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" >Account</a>
-			</li>
 		</ul>
 	</div>
 
@@ -442,9 +432,7 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 			<li class="nav-item">
 				<a href="#contactus" >Contact Us</a>
 			</li>
-			<li class="nav-item">
-				<a href="#" >Account</a>
-			</li>
+			
 		</ul>
 	</div>
 
