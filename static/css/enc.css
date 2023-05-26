@@ -11,7 +11,7 @@ body {
 }
 .container{
     height: 100vh;
-    width: 13.5in;
+    width: 14.5in;
 }
 
 .encryptionHeader{
@@ -20,17 +20,11 @@ body {
     color: #ff0000;
     text-shadow: 4px 4px #5d0000;
 }
-h1{
-    /*font-family: 'Bitter', serif;*/
-    /*font-family: 'Noto Sans', sans-serif;*/
-    /*font-family: 'Pacifico', cursive;*/
-}
 
 .formbox{
     justify-content: right;
     margin:100px auto;
     width: 5in;
-    height: 6in;
     border-radius: 10px 20px;
     box-shadow: 10px 13px #5d0000;
     background:transparent ;
@@ -41,6 +35,7 @@ h1{
 form input[type="submit"]{
     float: right;
     margin:15px;
+    margin-bottom: 25px;
     margin-right: 35px;
 
     background-color: red;
@@ -66,8 +61,6 @@ input, textarea{
 }
 label{
     width: 2in;
-    font-family: 'Bitter', serif;
-    font-family: 'Pacifico', cursive;
     font-weight: bolder;
     color: red;
     margin:10px;

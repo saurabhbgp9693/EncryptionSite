@@ -12,6 +12,6 @@ func main() {
 
 	router.RouterHandler()
 
-	log.Fatal(http.ListenAndServe(":8082", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }

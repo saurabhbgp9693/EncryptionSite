@@ -105,8 +105,8 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 							<label for="message">Cipher Text :</label><br>
 							<input style="height: 0.7in; " name="cipher" id="cipher" required>
 							<br>
+							<br>
 							<label for="dropdown">Select type of Key:</label>
-							
 							<select name="dropdown">
 								<option  value="aes">AES Key</option>
 								<option  value="rsa">RSA Keys</option>
@@ -180,8 +180,8 @@ func DecryptPage(w http.ResponseWriter, r *http.Request) {
 		<label for="message">Cipher Text :</label><br>
 		<input style="height: 0.7in; " name="cipher" id="cipher" required>
 		<br>
-		<label for="dropdown">Select type of Key:</label>
 		<br>
+		<label for="dropdown">Select type of Key:</label>
 		<select name="dropdown">
                 <option  value="aes">AES Key</option>
                 <option  value="rsa">RSA Private Key</option>
@@ -483,11 +483,13 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 					<label for="message">Message :</label><br>
 					<input style="height: 0.7in; " name="message" id="message" required>
 					<br>
+					<br>
 					<label for="dropdown">Select type of Key:</label>
 					<select name="dropdown">
 						<option  value="aes">AES Key</option>
 						<option  value="rsa">RSA Public Key</option>
 					</select>
+					<br>
 					<br>
 					<label for="key">Key :</label>
 					<br>
@@ -561,11 +563,13 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 							<label for="message">Message :</label><br>
 							<input style="height: 0.7in; " name="message" id="message" required>
 							<br>
+							<br>
 							<label for="dropdown">Select type of Key:</label>
 							<select name="dropdown">
 								<option  value="aes">AES Key</option>
 								<option  value="rsa">RSA Public Key</option>
 							</select>
+							<br>
 							<br>
 							<label for="key">Key :</label>
 							<br>
@@ -635,11 +639,13 @@ func EncryptHandler(w http.ResponseWriter, r *http.Request) {
 					<label for="message">Message :</label><br>
 					<input style="height: 0.7in; " name="message" id="message" required>
 					<br>
+					<br>
 					<label for="dropdown">Select type of Key:</label>
 					<select name="dropdown">
 						<option value="aes">AES Key</option>
 						<option value="rsa">RSA Public Key</option>
 					</select>
+					<br>
 					<br>
 					<label for="key">Key :</label>
 					<br>
