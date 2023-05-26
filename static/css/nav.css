@@ -1,0 +1,51 @@
+
+h1 {
+	text-align: center;
+	font-size: 3em;
+	text-shadow: 2px 2px #000;
+}
+
+.nav-logo a img {
+	margin: 10px 10px;
+	width: 50px;
+	height: 50px;
+	border-radius:30px 30px;
+	border: 2px solid rgba(255, 0, 0, 0.463);
+
+}
+
+.nav-list{
+	margin-left: auto;
+	margin-right: 0;
+	display: flex;	
+	text-decoration: none;
+}
+a{
+	color: red;
+	text-decoration: none;
+	text-shadow: 1px 1px #000;
+}
+li{
+	
+	font-size: larger;
+	margin: 15px 20px;
+	list-style-type: none;
+	text-decoration: none;
+}
+
+.encryptionHeader {
+	background-image: linear-gradient(to top left, rgb(0, 0, 0), rgba(255, 0, 0, 0.749),rgb(0, 0, 0));
+	display: flex;
+	height: 65px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px 5px;
+	box-shadow: 10px 10px rgba(46, 5, 5, 0.486);
+	
+}
+
+.nav-title{
+	padding: 10px 10px;
+	margin-left: 30%;
+	text-decoration: none;
+}

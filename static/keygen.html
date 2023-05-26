@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Noto+Sans:ital,wght@1,700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/enc.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+
+    <title>Key Generation</title>
+</head>
+<body >
+<div class="container">
+    
+    <div class="encryptionHeader">
+        <div class="nav-logo">
+        <a href="/" ><img src='/static/img/logo.jpg' alt="image"></a>
+        </div>
+
+        <div class="nav-title">
+            <h1>Encryption World</h1>
+        </div>
+
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="/" >Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/about" >About</a>
+            </li>
+            <li class="nav-item">
+                <a href="#contactus" >Contact Us</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="formbox">
+
+        <h1>Generate Key</h1>
+        <hr style="color: black; width: 4in">
+
+
+
+        <form id="enc-form" method="POST">
+            <br>
+            <label for="dropdown">Select type of Key:</label>
+            <select name="dropdown">
+                <option  value="aes">AES Key</option>
+                <option  value="rsa">RSA Keys</option>
+            </select>
+            <br>
+            <br>
+            <label for="email">Email:</label>
+            <br>
+            <input type="email" id="email" name="email" required placeholder="abc@xyz.com">
+            <br>
+            <br>
+            <br>
+            <input type="submit" name="submit" id="submit" value="Send">
+            <br>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
